@@ -1,0 +1,42 @@
+admin
+    admin_id PK
+    first_name
+    last_name
+    email_address
+    password
+
+host
+    host_id PK
+    first_name
+    last_name
+    address
+    business_name
+    business_address
+    email_address
+    password
+
+
+attendee
+    attendee_id PK
+    national_id
+    first_name
+    last_name
+    email_address
+    address
+    telephone_number
+    cell_number
+
+
+event
+    event_id PK
+    host_id FK
+    name
+    address
+
+
+event_attendee
+    event_id PK
+    attendee_id PK
+    created_at PK
+
+    
