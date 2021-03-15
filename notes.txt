@@ -40,3 +40,6 @@ event_attendee
     created_at PK
 
     
+
+
+{"first_name":"Jann","last_name": "Deo","email": "jacsdwndcs@live.com", "password": "$2y$12$JWeM0eFzN3P1vUEDFVuNNeNfjdyuC1N1vuuGjkPX/x6jsHEQIKzwK"}

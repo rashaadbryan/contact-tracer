@@ -15,7 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return response(Admin::all())->header('Content-Type', 'application/json');
+        return response()->json(Admin::all());
     }
 
     /**
@@ -39,19 +39,17 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => 'required|max:255|unique:admin,email',
             'password' => 'required|max:255',
         ]);
     
         if ($validator->fails()) {    
             return response()->json($validator->messages(), 400);
         } else {
-            $success = Admin::create($request->all());
+            $admin = Admin::create($request->all());
 
-            if ($success) {
-                return response()->json([
-                    'Message' => 'Admin successfully created'
-                ], 201); 
+            if ($admin) {
+                return response()->json($admin, 201); 
             } else {
                 return response()->json([
                     'Message' => 'Failed to save admin'
@@ -66,9 +64,16 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin)
+    public function show($id)
     {
-        //
+        $admin = Admin::find($id);
+        if ($admin) {
+            return response()->json($admin, 200); 
+        } else {
+            return response()->json([
+                'Message' => 'Failed to find admin'
+            ], 404);
+        }
     }
 
     /**
