@@ -20,4 +20,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/{id}', 'AdminController@show');
 Route::post('/admin', 'AdminController@store')->middleware('EnsureDataIsJSON');
-
+Route::put('/admin', 'AdminController@update')->middleware('EnsureDataIsJSON');

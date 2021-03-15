@@ -94,9 +94,36 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'admin_id' => 'required',
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|max:255|unique:admin,email',
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        } else {
+            $admin = Admin::find($request->admin_id);
+            if ($admin) {
+                $updateAdmin = $admin->update($request->all());
+                if ($updateAdmin) {
+                    return response()->json([
+                        'Message' => 'Admin updated successfully'
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'Message' => 'Failed to save admin'
+                    ], 500);
+                }
+            } else {
+                return response()->json([
+                    'Message' => 'Failed to find admin'
+                ], 404);
+            }
+        }  
     }
 
     /**
